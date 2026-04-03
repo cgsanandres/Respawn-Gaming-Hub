@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respawn Gaming Hub - Gallery</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #121212; color: #fff; }
+        
+        :root { --accent: #00e5ff; }
+
+        /* Navigation Bar */
+        nav { background: #1e1e1e; padding: 15px 20px; box-shadow: 0 0 15px rgba(0,229,255,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; }
+        .logo span { color: var(--accent); }
+        
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: #ccc; text-decoration: none; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        .mobile-menu { display: none; font-size: 1.8rem; cursor: pointer; }
+
+        /* Page Header */
+        .page-header { max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
+        .page-header p { color: #ccc; max-width: 800px; margin: 0 auto; }
+
+        /* Gallery Tabs */
+        .gallery-tabs { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+        .tab-btn { background: #1e1e1e; border: none; color: #ccc; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: var(--accent); color: #121212; }
+        .tab-btn:hover { color: var(--accent); }
+
+        /* Gallery Content */
+        .gallery-content { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
+        .gallery-content.active { display: block; }
+
+        /* Photo Grid */
+        .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .photo-card { background: #1e1e1e; border-radius: 8px; padding: 10px; text-align: center; }
+        .photo-img { width: 100%; height: 220px; background: #2d2d2d; border-radius: 4px; overflow: hidden; margin-bottom: 10px; }
+        .photo-img img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-caption { color: #ccc; font-size: 0.9rem; }
+
+        /* Video Section */
+        .video-section { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .video-section h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.3rem; }
+        .video-card { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }
+        .video-thumbnail { width: 100%; height: 180px; background: #2d2d2d; border-radius: 4px; display: flex; justify-content: center; align-items: center; color: #ccc; }
+        .video-details { text-align: left; padding: 10px 0; }
+        .video-title { color: #fff; text-decoration: none; }
+        .video-title:hover { color: var(--accent); }
+        .video-meta { color: #ccc; font-size: 0.9rem; margin-top: 5px; }
+
+        /* Featured Section */
+        .featured-section { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .featured-section h3 { color: var(--accent); margin-bottom: 15px; text-align: center; font-size: 1.5rem; }
+        .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+        .featured-item { text-align: center; }
+        .featured-item img { width: 100%; height: 150px; border-radius: 4px; object-fit: cover; }
+        .featured-caption { margin-top: 8px; color: #ccc; font-size: 0.9rem; }
+
+        /* Lightbox Modal */
+        .lightbox { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 300; justify-content: center; align-items: center; }
+        .lightbox-img { max-width: 80%; max-height: 80vh; border-radius: 4px; }
+        .close-lightbox { position: absolute; top: 20px; right: 30px; font-size: 2rem; color: #fff; cursor: pointer; }
+        .close-lightbox:hover { color: var(--accent); }
+
+        /* Footer */
+        footer { background: #1e1e1e; padding: 20px; text-align: center; color: #ccc; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+            .photo-grid { grid-template-columns: repeat(2, 1fr); }
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+            .photo-grid { grid-template-columns: 1fr; }
+            .featured-grid { grid-template-columns: 1fr; }
+            .video-card { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">RESPAWN <span>GAMING HUB</span></div>
+            
+            <ul class="nav-links">
+                 <li><a href="respawnhome.html">Home</a></li>
+                <li><a href="aboutrespawn.html">About</a></li>
+                <li><a href="respawngames.html">Games/Services</a></li>
+                <li><a href="respawnevents.html">Events</a></li>
+                <li><a href="respawnpricing.html">Pricing</a></li>
+                <li><a href="respawnshop.html">Shop</a></li>
+                <li><a href="respawncommunity.html">Community</a></li>
+                <li><a href="respawngallery.html">Gallery</a></li>
+                <li><a href="respawncontact.html">Contact</a></li>
+                <li><a href="respawnfaq.html">FAQ</a></li>
+                <li><a href="respawnleaderboard.html">Leaderboard</a></li>
+                <li><a href="respawnprofile.html">Profile</a></li>
+                <li><a href="respawnadmin.html">Admin</a></li>
+            </ul>
+            
+            <div class="mobile-menu">&#9776;</div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>RESPAWN GALLERY</h1>
+        <p>Photos & videos of events, setups, and our amazing gaming community!</p>
+    </section>
+
+    <!-- Gallery Tabs -->
+    <div class="gallery-tabs">
+        <button class="tab-btn active" onclick="showGalleryTab('events')">EVENT PHOTOS</button>
+        <button class="tab-btn" onclick="showGalleryTab('setups')">HUB SETUPS</button>
+        <button class="tab-btn" onclick="showGalleryTab('community')">COMMUNITY MEDIA</button>
+        <button class="tab-btn" onclick="showGalleryTab('featured')">FEATURED CONTENT</button>
+    </div>
+
+    <!-- Event Photos Content -->
+    <div class="gallery-content active" id="events">
+        <h3 style="color:var(--accent); margin-bottom:20px; text-align:center; font-size:1.5rem;">TOURNAMENTS & GAME NIGHTS</h3>
+        <div class="photo-grid">
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=RESPAWN+OPEN+2026', 'Respawn Open 2026 Grand Finals')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=RESPAWN+OPEN+2026" alt="Respawn Open 2026"></div>
+                <div class="photo-caption">Respawn Open 2026 - Grand Finals Stage</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=LAN+PARTY', 'Weekend LAN Party')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=LAN+PARTY" alt="Weekend LAN Party"></div>
+                <div class="photo-caption">Weekend LAN Party - March 2026</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=VR+TOURNAMENT', 'VR Tournament')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=VR+TOURNAMENT" alt="VR Tournament"></div>
+                <div class="photo-caption">VR Gaming Tournament Winners</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=COSPLAY+EVENT', 'Cosplay Event')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=COSPLAY+EVENT" alt="Cosplay Event"></div>
+                <div class="photo-caption">Community Cosplay Meetup</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=STREAMER+SPOTLIGHT', 'Featured Streamer')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=STREAMER+SPOTLIGHT" alt="Featured Streamer"></div>
+                <div class="photo-caption">Featured Streamer of the Month</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=TEAM+BUILDING', 'Team Building')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=TEAM+BUILDING" alt="Team Building"></div>
+                <div class="photo-caption">Team Building Day</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hub Setups Content -->
+    <div class="gallery-content" id="setups">
+        <h3 style="color:var(--accent); margin-bottom:20px; text-align:center; font-size:1.5rem;">HUB SETUPS & GEAR</h3>
+        <div class="photo-grid">
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=PRO+PC+RIG', 'Pro PC Rig')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=PRO+PC+RIG" alt="Pro PC Rig"></div>
+                <div class="photo-caption">Pro Gaming PC Stations</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=VR+BOOTHS', 'VR Booths')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=VR+BOOTHS" alt="VR Booths"></div>
+                <div class="photo-caption">VR Gaming Booths</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=CONSOLE+AREA', 'Console Area')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=CONSOLE+AREA" alt="Console Area"></div>
+                <div class="photo-caption">Console Gaming Zone</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=STREAMING+STUDIO', 'Streaming Studio')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=STREAMING+STUDIO" alt="Streaming Studio"></div>
+                <div class="photo-caption">Live Streaming Studio</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=CAFÉ+AREA', 'Café Area')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=CAFÉ+AREA" alt="Café Area"></div>
+                <div class="photo-caption">Gaming Café & Lounge</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=TOURNAMENT+SETUP', 'Tournament Setup')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=TOURNAMENT+SETUP" alt="Tournament Setup"></div>
+                <div class="photo-caption">Tournament Stage Setup</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Community Media Content -->
+    <div class="gallery-content" id="community">
+        <h3 style="color:var(--accent); margin-bottom:20px; text-align:center; font-size:1.5rem;">COMMUNITY SUBMISSIONS</h3>
+        
+        <div class="photo-grid">
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=USER+SETUP', 'User Gaming Setup')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=USER+SETUP" alt="User Setup"></div>
+                <div class="photo-caption">@PlayerOne_23 - Home Setup</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=CLIP+HIGHLIGHT', 'Game Clip Highlight')">
+                <div class="video-thumbnail"><img src="https://via.placeholder.com/800x600.png?text=CLIP+HIGHLIGHT" alt="Game Clip"></div>
+                <div class="photo-caption">@PinoyGamer88 - Valorant Ace</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=COMMUNITY+MEETUP', 'Community Meetup')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=COMMUNITY+MEETUP" alt="Community Meetup"></div>
+                <div class="photo-caption">@StreamerGirl_PH - Community Meetup Group Photo</div>
+            </div>
+            <div class="photo-card" onclick="openLightbox('https://via.placeholder.com/800x600.png?text=TOURNAMENT_WIN', 'Tournament Win')">
+                <div class="photo-img"><img src="https://via.placeholder.com/800x600.png?text=TOURNAMENT_WIN" alt="Tournament Win"></div>
+                <div class="photo-caption">@TeamCaptainPH - Champions at Respawn Open</div>
+            </div>
+        </div>
+
+        <h3 style="color:var(--accent); margin-bottom:20px; text-align:center; font-size:1.5rem;">COMMUNITY VIDEOS</h3>
+        <div class="video-section">
+            <div class="video-card">
+                <div class="video-thumbnail" onclick="openVideoModal('Community Game Night Highlights')">
+                    <img src="https://via.placeholder.com/800x450.png?text=GAME+NIGHT" alt="Game Night Highlights">
+                    <div style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.7); padding:5px 10px; border-radius:4px;">Community Game Night Highlights</div>
+                </div>
+                <div class="video-details">
+                    <h4>Community Game Night - March 2026</h4>
+                    <p class="video-meta">Uploaded March 28, 2026 • 12,000 Views</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail" onclick="openVideoModal('Hub Tour')">
+                    <img src="https://via.placeholder.com/800x450.png?text=HUB+TOUR" alt="Hub Tour">
+                    <div style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.7); padding:5px 10px; border-radius:4px;">Respawn Hub Full Tour</div>
+                </div>
+                <div class="video-details">
+                    <h4>Respawn Gaming Hub Complete Tour</h4>
+                    <p class="video-meta">Uploaded March 15, 2026 • 25,000 Views</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Content -->
+    <div class="gallery-content" id="featured">
+        <h3 style="color:var(--accent); margin-bottom:20px; text-align:center; font-size:1.5rem;">FEATURED CONTENT</h3>
+        <div class="featured-section">
+            <div class="featured-grid">
+                <div class="featured-item">
+                    <img src="https://via.placeholder.com/800x450.png?text=FEATURED_STREAMER" alt="Featured Streamer">
+                    <h4>FEATURED STREAMER OF THE WEEK</h4>
+                    <h3>@StreamerGirl_PH</h3>
+                    <p>Tune in every Friday 8PM for Valorant streams with giveaways!</p>
+                    <a href="#" class="action-btn" style="display:block; width:100%; text-align:center; margin-top:10px;">Visit Stream</a>
+                </div>
+                <div class="featured-item">
+                    <img src="https://via.placeholder.com/800x450.png?text=UPCOMING_EVENT" alt="Upcoming Event">
+                    <h4>UPCOMING EVENT</h4>
+                    <h3>Respawn Spring LAN Tournament</h3>
+                    <p>April 20-21, 2026 • ₱50,000 Grand Prize</p>
+                    <a href="events.html" class="action-btn" style="display:block; width:100%; text-align:center; margin-top:10px;">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox & Video Modals -->
+    <div class="lightbox" id="lightbox-modal" style="display:none;">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightbox-image">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <div class="video-modal" id="video-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:300; justify-content:center; align-items:center;">
+        <div class="modal-box" style="width:90%; max-width:800px; background:#1e1e1e; padding:20px; border-radius:8px;">
+            <span class="close-btn" onclick="closeVideoModal()" style="float:right; font-size:1.5rem; cursor:pointer;">&times;</span>
+            <h3 id="video-modal-title" style="color:var(--accent); text-align:center; margin-bottom:20px;"></h3>
+            <div style="width:100%; height:400px; background:#2d2d2d; border-radius:4px; display:flex; justify-content:center; align-items:center; color:#ccc;">
+                [VIDEO PLAYER: Click to play content]
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Respawn Gaming Hub | <a href="contact.html">Contact Us</a> | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // Gallery Tab Switching
+        function showGalleryTab(tabId) {
+            const contents = document.querySelectorAll('.gallery-content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Lightbox Functionality
+        function openLightbox(imageSrc, caption) {
+            const lightbox = document.getElementById('lightbox-modal');
+            const lightboxImg = document.getElementById('lightbox-image');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            
+            lightbox.style.display = 'flex';
+            lightboxImg.src = imageSrc;
+            lightboxCaption.textContent = caption;
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').style.display = 'none';
+        }
+
+        // Video Modal Functionality
+        function openVideoModal(title) {
+            const modal = document.getElementById('video-modal');
+            document.getElementById('video-modal-title').textContent = title;
+            modal.style.display = 'flex';
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').style.display = 'none';
+        }
+
+        // Initialize first tab
+        document.getElementById('events').classList.add('active');
+    </script>
+</body>
+</html>

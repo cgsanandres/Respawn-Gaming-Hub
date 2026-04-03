@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respawn Gaming Hub - Pricing & Membership</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #121212; color: #fff; }
+        
+        :root { --accent: #00e5ff; }
+
+        /* Navigation Bar */
+        nav { background: #1e1e1e; padding: 15px 20px; box-shadow: 0 0 15px rgba(0,229,255,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; }
+        .logo span { color: var(--accent); }
+        
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: #ccc; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        .mobile-menu { display: none; font-size: 1.8rem; cursor: pointer; }
+
+        /* Page Header */
+        .page-header { max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
+        .page-header p { color: #ccc; max-width: 800px; margin: 0 auto; }
+
+        /* Pricing Tabs */
+        .pricing-tabs { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
+        .pricing-tab { background: #1e1e1e; border: none; color: #ccc; padding: 12px 25px; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
+        .pricing-tab.active { background: var(--accent); color: #121212; }
+        .pricing-tab:hover { color: var(--accent); }
+
+        /* Pricing Cards */
+        .pricing-content { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
+        .pricing-content.active { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .price-card { background: #1e1e1e; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,229,255,0.05); text-align: center; position: relative; }
+        .popular-badge { background: var(--accent); color: #121212; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; position: absolute; top: -10px; right: 20px; }
+        .price-card h2 { color: var(--accent); margin-bottom: 15px; font-size: 1.8rem; }
+        .price-tag { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
+        .price-tag span { font-size: 1rem; font-weight: 400; color: #ccc; }
+        .benefits-list { list-style: none; margin-bottom: 25px; }
+        .benefits-list li { padding: 10px 0; border-bottom: 1px solid #2d2d2d; color: #ccc; display: flex; align-items: center; }
+        .benefits-list li::before { content: "✓"; color: var(--accent); margin-right: 10px; }
+        .subscribe-btn { background: var(--accent); color: #121212; border: none; padding: 12px 25px; border-radius: 4px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: 0.3s; width: 100%; }
+        .subscribe-btn:hover { background: #00b8cc; }
+
+        /* Add-Ons Section */
+        #addOns { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
+        #addOns.active { display: block; }
+        #addOns h3 { color: var(--accent); margin-bottom: 20px; text-align: center; font-size: 1.5rem; }
+        .addons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .addon-card { background: #1e1e1e; padding: 20px; border-radius: 8px; text-align: center; }
+        .addon-card h4 { margin-bottom: 10px; }
+        .addon-card p { color: #ccc; margin-bottom: 15px; }
+        .addon-btn { background: #2d2d2d; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .addon-btn:hover { background: var(--accent); color: #121212; }
+
+        /* Payment Modal */
+        .payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 300; justify-content: center; align-items: center; }
+        .modal-box { background: #1e1e1e; padding: 30px; border-radius: 8px; width: 100%; max-width: 450px; }
+        .modal-box h3 { color: var(--accent); margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; color: #ccc; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #3d3d3d; border-radius: 4px; color: #fff; }
+        .submit-payment { background: var(--accent); color: #121212; border: none; padding: 12px; border-radius: 4px; font-weight: 600; cursor: pointer; width: 100%; }
+        .close-modal { background: #ff4444; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+
+        /* Footer */
+        footer { background: #1e1e1e; padding: 20px; text-align: center; color: #ccc; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+            .pricing-content.active { grid-template-columns: 1fr 1fr; }
+            .addons-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 500px) {
+            .pricing-content.active { grid-template-columns: 1fr; }
+            .addons-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">RESPAWN <span>GAMING HUB</span></div>
+            
+            <ul class="nav-links">
+                <li><a href="respawnhome.html" class="active">Home</a></li>
+                <li><a href="aboutrespawn.html">About</a></li>
+                <li><a href="respawngames.html">Games/Services</a></li>
+                <li><a href="respawnevents.html">Events</a></li>
+                <li><a href="respawnpricing.html">Pricing</a></li>
+                <li><a href="respawnshop.html">Shop</a></li>
+                <li><a href="respawncommunity.html">Community</a></li>
+                <li><a href="respawngallery.html">Gallery</a></li>
+                <li><a href="respawncontact.html">Contact</a></li>
+                <li><a href="respawnfaq.html">FAQ</a></li>
+                <li><a href="respawnleaderboard.html">Leaderboard</a></li>
+                <li><a href="respawnprofile.html">Profile</a></li>
+                <li><a href="respawnadmin.html">Admin</a></li>
+            </ul>
+            
+            <div class="mobile-menu">&#9776;</div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>PRICING & MEMBERSHIP</h1>
+        <p>Choose from flexible hourly rates or exclusive membership plans packed with perks – all designed to fit your gaming style and budget.</p>
+    </section>
+
+    <!-- Pricing Tabs -->
+    <div class="pricing-tabs">
+        <button class="pricing-tab active" onclick="showPricing('hourly')">HOURLY RATES</button>
+        <button class="pricing-tab" onclick="showPricing('membership')">MEMBERSHIP PLANS</button>
+        <button class="pricing-tab" onclick="showPricing('addons')">ADD-ONS & EXTRAS</button>
+    </div>
+
+    <!-- Hourly Rates Content -->
+    <div class="pricing-content active" id="hourly">
+        <div class="price-card">
+            <h2>PC STATIONS</h2>
+            <div class="price-tag">₱150 <span>/ hour</span></div>
+            <ul class="benefits-list">
+                <li>Access to all pro PC rigs</li>
+                <li>1Gbps fiber internet</li>
+                <li>Free bottled water</li>
+                <li>Use of gaming peripherals</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openPaymentModal('Hourly PC Station')">BOOK NOW</button>
+        </div>
+
+        <div class="price-card">
+            <h2>CONSOLE STATIONS</h2>
+            <div class="price-tag">₱120 <span>/ hour</span></div>
+            <ul class="benefits-list">
+                <li>PS5 / Xbox Series X / Switch</li>
+                <li>4K TV display</li>
+                <li>Up to 4 players per station</li>
+                <li>Free snacks (popcorn/chips)</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openPaymentModal('Hourly Console Station')">BOOK NOW</button>
+        </div>
+
+        <div class="price-card">
+            <div class="popular-badge">MOST POPULAR</div>
+            <h2>VR BOOTHS</h2>
+            <div class="price-tag">₱250 <span>/ hour</span></div>
+            <ul class="benefits-list">
+                <li>Meta Quest Pro / Valve Index</li>
+                <li>Room-scale tracking</li>
+                <li>Guided setup support</li>
+                <li>Exclusive VR game library</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openPaymentModal('Hourly VR Booth')">BOOK NOW</button>
+        </div>
+    </div>
+
+    <!-- Membership Plans Content -->
+    <div class="pricing-content" id="membership">
+        <div class="price-card">
+            <h2>BASIC MEMBER</h2>
+            <div class="price-tag">₱999 <span>/ month</span></div>
+            <ul class="benefits-list">
+                <li>10% off all hourly rates</li>
+                <li>Priority booking for stations</li>
+                <li>Access to community forums</li>
+                <li>1 free hour per week</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openPaymentModal('Basic Membership')">SUBSCRIBE</button>
+        </div>
+
+        <div class="price-card">
+            <div class="popular-badge">BEST VALUE</div>
+            <h2>PREMIUM MEMBER</h2>
+            <div class="price-tag">₱1,999 <span>/ month</span></div>
+            <ul class="benefits-list">
+                <li>20% off all hourly rates</li>
+                <li>Free 5 hours per month</li>
+                <li>Early access to events</li>
+                <li>15% off merchandise</li>
+                <li>Free drink per visit</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openPaymentModal('Premium Membership')">SUBSCRIBE</button>
+        </div>
+
+        <div class="price-card">
+            <h2>ELITE MEMBER</h2>
+            <div class="price-tag">₱3,999 <span>/ month</span></div>
+            <ul class="benefits-list">
+                <li>30% off all hourly rates</li>
+                <li>Free 15 hours per month</li>
+                <li>Private training booth access</li>
+                <li>Free entry to all tournaments</li>
+                <li>25% off merchandise</li>
+                <li>Personalized gear setup</li>
+            </ul>
+            <button class="subscribe-btn" onclick="openPaymentModal('Elite Membership')">SUBSCRIBE</button>
+        </div>
+    </div>
+
+    <!-- Add-Ons Content -->
+    <div class="pricing-content" id="addons">
+        <h3 style="color:var(--accent); margin-bottom:20px; text-align:center;">EXTRA SERVICES & UPGRADES</h3>
+        <div class="addons-grid">
+            <div class="addon-card">
+                <h4>Gear Rental</h4>
+                <p>High-end peripherals for home use</p>
+                <p>₱500 / day</p>
+                <button class="addon-btn" onclick="openPaymentModal('Gear Rental')">RENT NOW</button>
+            </div>
+            <div class="addon-card">
+                <h4>Game Installation</h4>
+                <p>Custom game setup on your station</p>
+                <p>₱200 per game</p>
+                <button class="addon-btn" onclick="openPaymentModal('Game Installation')">REQUEST</button>
+            </div>
+            <div class="addon-card">
+                <h4>Private LAN Party</h4>
+                <p>Exclusive use of hub for 10+ players</p>
+                <p>₱5,000 / 4 hours</p>
+                <button class="addon-btn" onclick="openPaymentModal('Private LAN Party')">BOOK</button>
+            </div>
+            <div class="addon-card">
+                <h4>Pro Coaching Session</h4>
+                <p>1-on-1 training with pro gamers</p>
+                <p>₱1,200 / hour</p>
+                <button class="addon-btn" onclick="openPaymentModal('Pro Coaching')">BOOK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="modal-box">
+            <h3 id="modalTitle"></h3>
+            <div class="form-group">
+                <label>Gamer Tag</label>
+                <input type="text" placeholder="Enter your profile tag">
+            </div>
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="tel" placeholder="09XX XXX XXXX">
+            </div>
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select>
+                                        <option>PayMaya</option>
+                    <option>Credit/Debit Card</option>
+                    <option>Bank Transfer</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Duration / Quantity</label>
+                <input type="number" min="1" placeholder="Enter hours, months, or quantity">
+            </div>
+            <button type="button" class="submit-payment">PROCESS PAYMENT</button>
+            <button type="button" class="close-modal" onclick="document.getElementById('paymentModal').style.display='none';">CANCEL</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Respawn Gaming Hub | Quezon City, Metro Manila | <a href="#" style="color: var(--accent); text-decoration: none;">Terms & Conditions</a></p>
+    </footer>
+
+    <script>
+        // Switch between pricing tabs
+        function showPricing(tabId) {
+            const contents = document.querySelectorAll('.pricing-content');
+            contents.forEach(cont => cont.classList.remove('active'));
+            
+            const tabs = document.querySelectorAll('.pricing-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Open payment modal
+        function openPaymentModal(packageName) {
+            const modal = document.getElementById('paymentModal');
+            document.getElementById('modalTitle').textContent = packageName;
+            modal.style.display = 'flex';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target === modal) modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+

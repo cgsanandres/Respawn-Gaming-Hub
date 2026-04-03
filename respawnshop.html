@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respawn Gaming Hub - Shop</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #121212; color: #fff; }
+        
+        :root { --accent: #00e5ff; }
+
+        /* Navigation Bar */
+        nav { background: #1e1e1e; padding: 15px 20px; box-shadow: 0 0 15px rgba(0,229,255,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; }
+        .logo span { color: var(--accent); }
+        
+        .nav-links { display: flex; gap: 20px; list-style: none; }
+        .nav-links a { color: #ccc; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+        .mobile-menu { display: none; font-size: 1.8rem; cursor: pointer; }
+
+        /* Page Header */
+        .page-header { max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
+        .page-header p { color: #ccc; max-width: 800px; margin: 0 auto; }
+
+        /* Shop Categories */
+        .shop-tabs { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .shop-tab { background: #1e1e1e; border: none; color: #ccc; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .shop-tab.active { background: var(--accent); color: #121212; }
+        .shop-tab:hover { color: var(--accent); }
+
+        /* Shop Content */
+        .shop-content { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
+        .shop-content.active { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+        /* Product Cards */
+        .product-card { background: #1e1e1e; border-radius: 8px; padding: 20px; text-align: center; }
+        .product-img { width: 100%; height: 180px; background: #2d2d2d; border-radius: 4px; margin-bottom: 15px; overflow: hidden; }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; }
+        .product-name { margin-bottom: 10px; font-size: 1.1rem; }
+        .product-price { color: var(--accent); font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; }
+        .add-cart-btn { background: #2d2d2d; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .add-cart-btn:hover { background: var(--accent); color: #121212; }
+
+        /* Cart & Checkout */
+        #cart-section { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
+        #cart-section h3 { color: var(--accent); text-align: center; margin-bottom: 20px; font-size: 1.5rem; }
+        .cart-items { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #2d2d2d; }
+        .cart-item img { width: 50px; height: 50px; background: #2d2d2d; border-radius: 4px; }
+        .cart-total { background: #1e1e1e; border-radius: 8px; padding: 20px; text-align: right; }
+        .cart-total span { color: var(--accent); font-size: 1.2rem; font-weight: 700; }
+
+        /* Checkout Modal */
+        .checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; }
+        .modal-content { background: #1e1e1e; border-radius: 8px; padding: 30px; width: 100%; max-width: 500px; }
+        .modal-content h3 { color: var(--accent); text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; color: #ccc; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #3d3d3d; border-radius: 4px; color: #fff; }
+        .checkout-btn { background: var(--accent); color: #121212; border: none; padding: 12px; border-radius: 4px; font-weight: 600; width: 100%; cursor: pointer; }
+        .close-modal { background: #ff4444; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+
+        /* Footer */
+        footer { background: #1e1e1e; padding: 20px; text-align: center; color: #ccc; }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .nav-links { display: none; }
+            .mobile-menu { display: block; }
+            .shop-content.active { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+            .shop-content.active { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">RESPAWN <span>GAMING HUB</span></div>
+            
+            <ul class="nav-links">
+                <li><a href="respawnhome.html" class="active">Home</a></li>
+                <li><a href="aboutrespawn.html">About</a></li>
+                <li><a href="respawngames.html">Games/Services</a></li>
+                <li><a href="respawnevents.html">Events</a></li>
+                <li><a href="respawnpricing.html">Pricing</a></li>
+                <li><a href="respawnshop.html">Shop</a></li>
+                <li><a href="respawncommunity.html">Community</a></li>
+                <li><a href="respawngallery.html">Gallery</a></li>
+                <li><a href="respawncontact.html">Contact</a></li>
+                <li><a href="respawnfaq.html">FAQ</a></li>
+                <li><a href="respawnleaderboard.html">Leaderboard</a></li>
+                <li><a href="respawnprofile.html">Profile</a></li>
+                <li><a href="respawnadmin.html">Admin</a></li>
+            </ul>
+            
+            <div class="mobile-menu">&#9776;</div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>RESPAWN SHOP</h1>
+        <p>Official merch, gaming gear, and snacks – order online or pick up in-store!</p>
+    </section>
+
+    <!-- Shop Categories -->
+    <div class="shop-tabs">
+        <button class="shop-tab active" onclick="showShopTab('merch')">CAFÉ MERCH</button>
+        <button class="shop-tab" onclick="showShopTab('gear')">GAMING GEAR</button>
+        <button class="shop-tab" onclick="showShopTab('snacks')">SNACKS & DRINKS</button>
+        <button class="shop-tab" onclick="document.getElementById('cart-section').style.display='block'">VIEW CART</button>
+    </div>
+
+    <!-- Café Merch Content -->
+    <div class="shop-content active" id="merch">
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=RESPAWN+T-SHIRT" alt="Respawn T-Shirt"></div>
+            <div class="product-name">Respawn Logo T-Shirt</div>
+            <div class="product-price">₱799</div>
+            <button class="add-cart-btn" onclick="addToCart('Respawn Logo T-Shirt', 799, 'https://via.placeholder.com/300x200.png?text=RESPAWN+T-SHIRT')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=GAMING+MUG" alt="Gaming Mug"></div>
+            <div class="product-name">Respawn Heat-Changing Mug</div>
+            <div class="product-price">₱349</div>
+            <button class="add-cart-btn" onclick="addToCart('Respawn Heat-Changing Mug', 349, 'https://via.placeholder.com/300x200.png?text=GAMING+MUG')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=MOUSEPAD" alt="Gaming Mousepad"></div>
+            <div class="product-name">Extended Gaming Mousepad</div>
+            <div class="product-price">₱499</div>
+            <button class="add-cart-btn" onclick="addToCart('Extended Gaming Mousepad', 499, 'https://via.placeholder.com/300x200.png?text=MOUSEPAD')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=KEYCHAIN" alt="Respawn Keychain"></div>
+            <div class="product-name">Respawn Logo Keychain</div>
+            <div class="product-price">₱149</div>
+            <button class="add-cart-btn" onclick="addToCart('Respawn Logo Keychain', 149, 'https://via.placeholder.com/300x200.png?text=KEYCHAIN')">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Gaming Gear Content -->
+    <div class="shop-content" id="gear">
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=MECH+KEYBOARD" alt="Mechanical Keyboard"></div>
+            <div class="product-name">RGB Mechanical Keyboard</div>
+            <div class="product-price">₱2,499</div>
+            <button class="add-cart-btn" onclick="addToCart('RGB Mechanical Keyboard', 2499, 'https://via.placeholder.com/300x200.png?text=MECH+KEYBOARD')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=GAMING+MOUSE" alt="Gaming Mouse"></div>
+            <div class="product-name">Wireless Gaming Mouse</div>
+            <div class="product-price">₱1,299</div>
+            <button class="add-cart-btn" onclick="addToCart('Wireless Gaming Mouse', 1299, 'https://via.placeholder.com/300x200.png?text=GAMING+MOUSE')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=HEADSET" alt="Gaming Headset"></div>
+            <div class="product-name">7.1 Surround Headset</div>
+            <div class="product-price">₱1,899</div>
+            <button class="add-cart-btn" onclick="addToCart('7.1 Surround Headset', 1899, 'https://via.placeholder.com/300x200.png?text=HEADSET')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=CONTROLLER" alt="Controller"></div>
+            <div class="product-name">Custom RGB Controller</div>
+            <div class="product-price">₱2,199</div>
+            <button class="add-cart-btn" onclick="addToCart('Custom RGB Controller', 2199, 'https://via.placeholder.com/300x200.png?text=CONTROLLER')">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Snacks & Drinks Content -->
+    <div class="shop-content" id="snacks">
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=ENERGY+DRINK" alt="Energy Drink"></div>
+            <div class="product-name">Respawn Energy Drink (Pack of 6)</div>
+            <div class="product-price">₱499</div>
+            <button class="add-cart-btn" onclick="addToCart('Respawn Energy Drink (6pk)', 499, 'https://via.placeholder.com/300x200.png?text=ENERGY+DRINK')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=POPCORN" alt="Gourmet Popcorn"></div>
+            <div class="product-name">Gourmet Gaming Popcorn</div>
+            <div class="product-price">₱99</div>
+            <button class="add-cart-btn" onclick="addToCart('Gourmet Gaming Popcorn', 99, 'https://via.placeholder.com/300x200.png?text=POPCORN')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=CHOCOLATE" alt="Gaming Chocolate"></div>
+            <div class="product-name">Respawn Gaming Chocolate Bar</div>
+            <div class="product-price">₱129</div>
+            <button class="add-cart-btn" onclick="addToCart('Respawn Gaming Chocolate', 129, 'https://via.placeholder.com/300x200.png?text=CHOCOLATE')">Add to Cart</button>
+        </div>
+
+        <div class="product-card">
+                    <div class="product-card">
+            <div class="product-img"><img src="https://via.placeholder.com/300x200.png?text=CHIPS" alt="Gaming Chips"></div>
+            <div class="product-name">Spicy Gaming Potato Chips</div>
+            <div class="product-price">₱89</div>
+            <button class="add-cart-btn" onclick="addToCart('Spicy Gaming Potato Chips', 89, 'https://via.placeholder.com/300x200.png?text=CHIPS')">Add to Cart</button>
+        </div>
+    </div>
+
+    <!-- Cart Section -->
+    <div id="cart-section">
+        <div class="cart-container" id="cart-container">
+            <h2>Your Cart <span id="cart-count">(0 items)</span></h2>
+            <div id="cart-items" class="cart-items">
+                <p class="empty-cart">Your cart is empty</p>
+            </div>
+            <div id="cart-summary" class="cart-summary" style="display: none;">
+                <p>Total: <span id="cart-total">₱0</span></p>
+                <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkout-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeCheckoutModal()">&times;</span>
+            <h3>Complete Your Order</h3>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Contact Number</label>
+                    <input type="tel" required placeholder="09XX XXX XXXX">
+                </div>
+                <div class="form-group">
+                    <label>Delivery Option</label>
+                    <select required>
+                        <option value="">Select Option</option>
+                        <option value="pickup">In-Store Pickup (Free)</option>
+                        <option value="delivery">Delivery (₱150 Fee)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select required>
+                        <option value="">Select Method</option>
+                        <option value="gcash">GCash</option>
+                        <option value="paymaya">PayMaya</option>
+                        <option value="card">Credit/Debit Card</option>
+                    </select>
+                </div>
+                <button type="submit" class="checkout-btn">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Respawn Gaming Hub | Quezon City, Philippines | <a href="contact.html">Contact Us</a></p>
+    </footer>
+
+    <script>
+        // Shop Tab Switching
+        function showShopTab(tabId) {
+            const contents = document.querySelectorAll('.shop-content');
+            contents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            
+            const tabs = document.querySelectorAll('.shop-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Cart Functionality
+        let cart = [];
+        updateCartDisplay();
+
+        function addToCart(name, price, image) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, image, quantity: 1 });
+            }
+            updateCartDisplay();
+            alert(`${name} added to cart!`);
+        }
+
+        function updateCartDisplay() {
+            const cartItems = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            const cartSummary = document.getElementById('cart-summary');
+            const emptyCart = document.querySelector('.empty-cart');
+
+            // Clear existing items
+            cartItems.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
+                cartCount.textContent = '(0 items)';
+                cartTotal.textContent = '₱0';
+                cartSummary.style.display = 'none';
+                return;
+            }
+
+            // Calculate total
+            let total = 0;
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <h4>${item.name}</h4>
+                        <p>₱${item.price} x ${item.quantity} = ₱${itemTotal}</p>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart('${item.name}')">Remove</button>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            cartCount.textContent = `(${cart.length} item${cart.length !== 1 ? 's' : ''})`;
+            cartTotal.textContent = `₱${total.toFixed(2)}`;
+            cartSummary.style.display = 'block';
+            emptyCart.style.display = 'none';
+        }
+
+        function removeFromCart(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartDisplay();
+        }
+
+        // Checkout Modal Functions
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+
+        // Handle form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Order placed successfully! We will contact you shortly.');
+            closeCheckoutModal();
+            cart = [];
+            updateCartDisplay();
+        });
+    </script>
+</body>
+</html>
