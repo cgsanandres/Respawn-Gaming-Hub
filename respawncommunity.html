@@ -5,94 +5,443 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Respawn Gaming Hub - Community</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #121212; color: #fff; }
+       /* Base Styles - Similar to LAZPO23 TERMINAL */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Consolas', 'Monaco', 'monospace'; 
+}
+
+body { 
+    background: #0a0e17; 
+    color: #00f0ff; 
+    overflow-y: auto; 
+}
+
+/* Accent Color - Keep the cyan glow */
+:root { 
+    --accent: #00f0ff; 
+    --accent-dark: #008899; 
+    --bg-dark: #0a0e17;
+    --panel-dark: #101828; 
+}
+
+/* Navigation Bar */
+nav { 
+    background: var(--panel-dark); 
+    padding: 15px 20px; 
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); 
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
+    border-bottom: 1px solid var(--accent-dark); 
+}
+.nav-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; 
+}
+.logo { 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: var(--accent); 
+    text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent); 
+}
+.logo span { 
+    color: #fff; 
+    opacity: 0.7;
+    font-size: 0.8rem; 
+    margin-left: 5px;
+}
         
-        :root { --accent: #00e5ff; }
+.nav-links { 
+    display: flex; 
+    gap: 20px; 
+    list-style: none; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+}
+.nav-links a { 
+    color: #ccc; 
+    text-decoration: none; 
+    font-weight: 500; 
+    transition: 0.3s; 
+    padding: 5px 0; 
+    border-bottom: 1px solid transparent; 
+}
+.nav-links a:hover, .nav-links a.active { 
+    color: var(--accent); 
+    border-bottom: 1px solid var(--accent); 
+    text-shadow: 0 0 5px var(--accent); 
+}
+.mobile-menu { 
+    display: none; 
+    font-size: 1.8rem; 
+    cursor: pointer; 
+    color: var(--accent);
+}
 
-        /* Navigation Bar */
-        nav { background: #1e1e1e; padding: 15px 20px; box-shadow: 0 0 15px rgba(0,229,255,0.1); position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; }
-        .logo span { color: var(--accent); }
-        
-        .nav-links { display: flex; gap: 20px; list-style: none; }
-        .nav-links a { color: #ccc; text-decoration: none; transition: 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        .mobile-menu { display: none; font-size: 1.8rem; cursor: pointer; }
+/* Page Header */
+.page-header { 
+    max-width: 1200px; 
+    margin: 40px auto; 
+    padding: 0 20px; 
+    text-align: center; 
+}
+.page-header h1 { 
+    font-size: 2.5rem; 
+    margin-bottom: 20px; 
+    border-bottom: 2px solid var(--accent); 
+    display: inline-block; 
+    padding-bottom: 10px; 
+    text-shadow: 0 0 8px var(--accent); 
+}
+.page-header p { 
+    color: #ccc; 
+    max-width: 800px; 
+    margin: 0 auto; 
+}
 
-        /* Page Header */
-        .page-header { max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; }
-        .page-header h1 { font-size: 2.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
-        .page-header p { color: #ccc; max-width: 800px; margin: 0 auto; }
+/* Community Tabs */
+.community-tabs { 
+    max-width: 1200px; 
+    margin: 0 auto 30px; 
+    padding: 0 20px; 
+    display: flex; 
+    justify-content: center; 
+    gap: 25px; 
+    flex-wrap: wrap; 
+}
+.tab-btn { 
+    background: var(--panel-dark); 
+    border: 1px solid transparent; 
+    color: #ccc; 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    transition: 0.3s; 
+}
+.tab-btn.active { 
+    background: transparent; 
+    border: 1px solid var(--accent); 
+    color: var(--accent); 
+    box-shadow: 0 0 10px var(--accent); 
+}
+.tab-btn:hover { 
+    color: var(--accent); 
+    border-color: var(--accent); 
+}
 
-        /* Community Tabs */
-        .community-tabs { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
-        .tab-btn { background: #1e1e1e; border: none; color: #ccc; padding: 10px 20px; border-radius: 4px; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active { background: var(--accent); color: #121212; }
-        .tab-btn:hover { color: var(--accent); }
+/* Community Content */
+.community-content { 
+    max-width: 1200px; 
+    margin: 0 auto 60px; 
+    padding: 0 20px; 
+    display: none; 
+}
+.community-content.active { 
+    display: block; 
+}
 
-        /* Community Content */
-        .community-content { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
-        .community-content.active { display: block; }
+/* Blog Section */
+.blog-grid { 
+    display: grid; 
+    grid-template-columns: 3fr 1fr; 
+    gap: 30px; 
+    margin-bottom: 40px; 
+}
+.blog-post { 
+    background: var(--panel-dark); 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border: 1px solid var(--accent-dark); 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); 
+}
+.blog-post h3 { 
+    color: var(--accent); 
+    margin-bottom: 10px; 
+    font-size: 1.3rem; 
+    text-shadow: 0 0 5px var(--accent); 
+}
+.post-meta { 
+    color: #ccc; 
+    font-size: 0.9rem; 
+    margin-bottom: 15px; 
+}
+.post-content { 
+    color: #ddd; 
+    line-height: 1.6; 
+    margin-bottom: 15px; 
+}
+.read-more { 
+    color: var(--accent); 
+    text-decoration: none; 
+}
+.read-more:hover { 
+    text-decoration: underline; 
+    text-shadow: 0 0 5px var(--accent); 
+}
 
-        /* Blog Section */
-        .blog-grid { display: grid; grid-template-columns: 3fr 1fr; gap: 30px; margin-bottom: 40px; }
-        .blog-post { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-        .blog-post h3 { color: var(--accent); margin-bottom: 10px; font-size: 1.3rem; }
-        .post-meta { color: #ccc; font-size: 0.9rem; margin-bottom: 15px; }
-        .post-content { color: #ddd; line-height: 1.6; margin-bottom: 15px; }
-        .read-more { color: var(--accent); text-decoration: none; }
-        .read-more:hover { text-decoration: underline; }
+/* Sidebar */
+.sidebar { 
+    background: var(--panel-dark); 
+    border-radius: 8px; 
+    padding: 20px; 
+    border: 1px solid var(--accent-dark); 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); 
+}
+.sidebar h4 { 
+    color: var(--accent); 
+    margin-bottom: 15px; 
+    font-size: 1.2rem; 
+    text-shadow: 0 0 5px var(--accent); 
+}
+.sidebar-links { 
+    list-style: none; 
+}
+.sidebar-links li { 
+    padding: 8px 0; 
+    border-bottom: 1px solid var(--accent-dark); 
+}
+.sidebar-links a { 
+    color: #ccc; 
+    text-decoration: none; 
+}
+.sidebar-links a:hover { 
+    color: var(--accent); 
+}
 
-        /* Sidebar */
-        .sidebar { background: #1e1e1e; border-radius: 8px; padding: 20px; }
-        .sidebar h4 { color: var(--accent); margin-bottom: 15px; font-size: 1.2rem; }
-        .sidebar-links { list-style: none; }
-        .sidebar-links li { padding: 8px 0; border-bottom: 1px solid #2d2d2d; }
-        .sidebar-links a { color: #ccc; text-decoration: none; }
-        .sidebar-links a:hover { color: var(--accent); }
+/* Forum Section */
+.forum-section { 
+    background: var(--panel-dark); 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin-bottom: 30px; 
+    border: 1px solid var(--accent-dark); 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); 
+}
+.forum-section h3 { 
+    color: var(--accent); 
+    margin-bottom: 15px; 
+    text-shadow: 0 0 5px var(--accent); 
+}
+.forum-thread { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px 0; 
+    border-bottom: 1px solid var(--accent-dark); 
+}
+.thread-title { 
+    color: #fff; 
+    text-decoration: none; 
+}
+.thread-title:hover { 
+    color: var(--accent); 
+    text-shadow: 0 0 5px var(--accent); 
+}
+.thread-meta { 
+    color: #ccc; 
+    font-size: 0.9rem; 
+}
+.create-thread-btn { 
+    background: transparent; 
+    color: var(--accent); 
+    border: 1px solid var(--accent); 
+    padding: 10px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: 600; 
+    transition: 0.3s; 
+}
+.create-thread-btn:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--accent);
+}
 
-        /* Forum Section */
-        .forum-section { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
-        .forum-section h3 { color: var(--accent); margin-bottom: 15px; }
-        .forum-thread { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #2d2d2d; }
-        .thread-title { color: #fff; text-decoration: none; }
-        .thread-title:hover { color: var(--accent); }
-        .thread-meta { color: #ccc; font-size: 0.9rem; }
-        .create-thread-btn { background: var(--accent); color: #121212; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; }
+/* User Content Section */
+.user-content { 
+    background: var(--panel-dark); 
+    border-radius: 8px; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border: 1px solid var(--accent-dark); 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); 
+}
+.user-header { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
+}
+.user-avatar { 
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    background: #2d2d2d; 
+    margin-right: 15px; 
+    border: 1px solid var(--accent-dark);
+}
+.user-name { 
+    font-weight: 700; 
+    color: var(--accent);
+}
+.user-post { 
+    color: #ddd; 
+    line-height: 1.6; 
+    margin-bottom: 10px; 
+}
+.post-actions { 
+    display: flex; 
+    gap: 15px; 
+}
+.action-btn { 
+    background: #2d2d2d; 
+    color: #ccc; 
+    border: 1px solid var(--accent-dark); 
+    padding: 5px 10px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+}
+.action-btn:hover { 
+    color: var(--accent); 
+    border-color: var(--accent);
+}
 
-        /* User Content Section */
-        .user-content { background: #1e1e1e; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
-        .user-header { display: flex; align-items: center; margin-bottom: 15px; }
-        .user-avatar { width: 50px; height: 50px; border-radius: 50%; background: #2d2d2d; margin-right: 15px; }
-        .user-name { font-weight: 700; }
-        .user-post { color: #ddd; line-height: 1.6; margin-bottom: 10px; }
-        .post-actions { display: flex; gap: 15px; }
-        .action-btn { background: #2d2d2d; color: #ccc; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
-        .action-btn:hover { color: var(--accent); }
+/* Post Modal */
+.post-modal { 
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.8); 
+    z-index: 200; 
+    justify-content: center; 
+    align-items: center; 
+}
+.modal-box { 
+    background: var(--panel-dark); 
+    padding: 30px; 
+    border-radius: 8px; 
+    width: 100%; 
+    max-width: 500px; 
+    border: 1px solid var(--accent-dark);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+}
+.modal-box h3 { 
+    color: var(--accent); 
+    text-align: center; 
+    margin-bottom: 20px; 
+    text-shadow: 0 0 5px var(--accent);
+}
+.form-group { 
+    margin-bottom: 15px; 
+}
+.form-group label { 
+    display: block; 
+    color: #ccc; 
+    margin-bottom: 5px; 
+}
+.form-group input, .form-group textarea, .form-group select { 
+    width: 100%; 
+    padding: 10px; 
+    background: #2d2d2d; 
+    border: 1px solid var(--accent-dark); 
+    border-radius: 4px; 
+    color: #fff; 
+    font-family: inherit;
+}
+.form-group textarea { 
+    height: 150px; 
+    resize: none; 
+}
+.submit-post, .submit-btn { 
+    background: transparent; 
+    color: var(--accent); 
+    border: 1px solid var(--accent); 
+    padding: 10px; 
+    border-radius: 4px; 
+    font-weight: 600; 
+    width: 100%; 
+    cursor: pointer;
+    transition: 0.3s;
+}
+.submit-post:hover, .submit-btn:hover {
+    background: var(--accent);
+    color: var(--bg-dark);
+    box-shadow: 0 0 10px var(--accent);
+}
+.close-btn, .close-modal { 
+    background: transparent; 
+    color: #ff4444; 
+    border: 1px solid #ff4444; 
+    padding: 8px 15px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    margin-top: 10px; 
+    transition: 0.3s;
+}
+.close-btn:hover, .close-modal:hover {
+    background: #ff4444;
+    color: #000;
+}
 
-        /* Post Modal */
-        .post-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; }
-        .modal-box { background: #1e1e1e; padding: 30px; border-radius: 8px; width: 100%; max-width: 500px; }
-        .modal-box h3 { color: var(--accent); text-align: center; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; color: #ccc; margin-bottom: 5px; }
-        .form-group input, .form-group textarea { width: 100%; padding: 10px; background: #2d2d2d; border: 1px solid #3d3d3d; border-radius: 4px; color: #fff; }
-        .form-group textarea { height: 150px; resize: none; }
-        .submit-post { background: var(--accent); color: #121212; border: none; padding: 10px; border-radius: 4px; font-weight: 600; width: 100%; cursor: pointer; }
-        .close-modal { background: #ff4444; color: #fff; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-top: 10px; }
+/* Footer */
+footer { 
+    background: var(--panel-dark); 
+    padding: 20px; 
+    text-align: center; 
+    color: #ccc; 
+    margin-top: 60px; 
+    border-top: 1px solid var(--accent-dark); 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); 
+}
+footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    text-shadow: 0 0 5px var(--accent);
+}
+footer a:hover {
+    text-decoration: underline;
+}
 
-        /* Footer */
-        footer { background: #1e1e1e; padding: 20px; text-align: center; color: #ccc; }
-        footer a { color: var(--accent); text-decoration: none; }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .mobile-menu { display: block; }
-            .blog-grid { grid-template-columns: 1fr; }
-        }
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .nav-links { 
+        display: none; 
+        flex-direction: column; 
+        width: 100%; 
+        text-align: center;
+        padding-top: 15px;
+        background: var(--panel-dark); 
+        position: absolute; 
+        top: 60px; 
+        left: 0;
+        border: 1px solid var(--accent-dark);
+        border-top: none;
+    }
+    .nav-links.active {
+        display: flex;
+    }
+    .nav-links li {
+        margin: 10px 0;
+    }
+    .mobile-menu { 
+        display: block; 
+    }
+    .blog-grid { 
+        grid-template-columns: 1fr; 
+    }
+}
     </style>
 </head>
 <body>
@@ -102,19 +451,19 @@
             <div class="logo">RESPAWN <span>GAMING HUB</span></div>
             
             <ul class="nav-links">
-                  <li><a href="respawnhome.html" class="active">Home</a></li>
-                <li><a href="aboutrespawn.html">About</a></li>
-                <li><a href="respawngames.html">Games/Services</a></li>
-                <li><a href="respawnevents.html">Events</a></li>
-                <li><a href="respawnpricing.html">Pricing</a></li>
-                <li><a href="respawnshop.html">Shop</a></li>
-                <li><a href="respawncommunity.html">Community</a></li>
-                <li><a href="respawngallery.html">Gallery</a></li>
-                <li><a href="respawncontact.html">Contact</a></li>
-                <li><a href="respawnfaq.html">FAQ</a></li>
-                <li><a href="respawnleaderboard.html">Leaderboard</a></li>
-                <li><a href="respawnprofile.html">Profile</a></li>
-                <li><a href="respawnadmin.html">Admin</a></li>
+                   <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="games.html">Games/Services</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html"class="active">Community</a></li>
+                
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="admin.html">Admin</a></li
             </ul>
             
             <div class="mobile-menu">&#9776;</div>
@@ -232,7 +581,9 @@
             </div>
             <div class="user-post">
                 <p>Check out this clutch 1v5 I pulled off in Valorant last night!</p>
-                <div style="width:100%; height:250px; background:#2d2d2d; border-radius:4px; display:flex; justify-content:center; align-items:center; color:#ccc; margin:10px 0;">[VIDEO: Valorant 1v5 Clutch]</div>
+                <div style="width:100%; height:250px; background:#2d2d2d; border-radius:4px; display:flex; justify-content:center; align-items:center; color:#ccc; margin:10px 0;">
+				<img src="images/clutch.jpeg" alt="Custom Setup"  style="width:100%; height:100%; object-fit:cover; border-radius:4px;">
+				</div>
                 <div class="post-actions">
                     <button class="action-btn">Like (24)</button>
                     <button class="action-btn">Comment (6)</button>
@@ -252,7 +603,7 @@
             <div class="user-post">
                 <p>My custom gaming setup at home – inspired by Respawn Hub’s stations!</p>
                 <div style="width:100%; height:250px; background:#2d2d2d; border-radius:4px; display:flex; justify-content:center; align-items:center; color:#ccc; margin:10px 0;">
-                    <img src="https://via.placeholder.com/600x300.png?text=CUSTOM+GAMING+SETUP" alt="Custom Setup" style="width:100%; height:100%; object-fit:cover; border-radius:4px;">
+                    <img src="images/setup.jpeg" alt="Custom Setup" style="width:100%; height:100%; object-fit:cover; border-radius:4px;">
                 </div>
                 <div class="post-actions">
                     <button class="action-btn">Like (18)</button>
@@ -407,4 +758,4 @@
         document.getElementById('blog').classList.add('active');
     </script>
 </body>
-</html>
+</html
