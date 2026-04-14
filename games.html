@@ -5,80 +5,372 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Respawn Gaming Hub - Games & Services</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #121212; color: #fff; }
+        /* Base Styles - Cyberpunk/Terminal Aesthetic */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    /* Monospace font for terminal feel */
+    font-family: 'Consolas', 'Monaco', 'monospace'; 
+}
+
+body { 
+    background: #0a0e17; /* Dark background */
+    color: #00f0ff; /* Bright cyan text */
+    overflow-y: auto; /* Allow scrolling */
+}
+
+/* CSS Variables for consistent styling */
+:root { 
+    --accent: #00f0ff; /* Main cyan glow */
+    --accent-dark: #008899; /* Darker cyan for borders/accents */
+    --bg-dark: #0a0e17; /* Main dark background */
+    --panel-dark: #101828; /* Darker panel/card background */
+    --text-light: #ccc; /* Lighter text for secondary info */
+}
+
+/* Navigation Bar - Cyberpunk Style */
+nav { 
+    background: var(--panel-dark); /* Dark panel background */
+    padding: 15px 20px; 
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); /* Soft glow */
+    position: sticky; 
+    top: 0; 
+    z-index: 100; 
+    border-bottom: 1px solid var(--accent-dark); /* Subtle dark cyan border */
+}
+.nav-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+.logo { 
+    font-size: 1.5rem; 
+    font-weight: 700; 
+    color: var(--accent); /* Logo in accent color */
+    text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent); /* Glow effect */
+}
+.logo span { 
+    color: #fff; /* Hub text in white */
+    opacity: 0.7;
+    font-size: 0.8rem; /* Smaller size for 'HUB' */
+    margin-left: 5px;
+}
         
-        :root { --accent: #00e5ff; }
+.nav-links { 
+    display: flex; 
+    gap: 15px; /* Slightly reduced gap */
+    list-style: none; 
+    flex-wrap: wrap; /* Allow links to wrap */
+    justify-content: center; /* Center links when wrapped */
+}
+.nav-links a { 
+    color: var(--text-light); /* Lighter text color */
+    text-decoration: none; 
+    font-weight: 500; 
+    transition: 0.3s; 
+    padding: 5px 0; 
+    border-bottom: 1px solid transparent; /* Placeholder for hover effect */
+}
+.nav-links a:hover, .nav-links a.active { 
+    color: var(--accent); 
+    border-bottom: 1px solid var(--accent); /* Subtle underline */
+    text-shadow: 0 0 5px var(--accent); /* Glow on hover/active */
+}
+.mobile-menu { 
+    display: none; 
+    font-size: 1.8rem; 
+    cursor: pointer; 
+    color: var(--accent); /* Hamburger icon in accent color */
+}
 
-        /* Navigation Bar */
-        nav { background: #1e1e1e; padding: 15px 20px; box-shadow: 0 0 15px rgba(0,229,255,0.1); position: sticky; top: 0; z-index: 100; }
-        .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; }
-        .logo span { color: var(--accent); }
-        
-        .nav-links { display: flex; gap: 20px; list-style: none; }
-        .nav-links a { color: #ccc; text-decoration: none; font-weight: 500; transition: 0.3s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        .mobile-menu { display: none; font-size: 1.8rem; cursor: pointer; }
+/* Page Header - Cyberpunk Style */
+.page-header { 
+    max-width: 1200px; 
+    margin: 40px auto; 
+    padding: 0 20px; 
+    text-align: center; 
+    border: 1px solid var(--accent-dark); /* Border */
+    padding: 20px 30px;
+    background: var(--panel-dark); /* Panel background */
+    box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.1); /* Inner glow */
+}
+.page-header h1 { 
+    font-size: 2.5rem; 
+    margin-bottom: 20px; 
+    border-bottom: 2px solid var(--accent); /* Accent underline */
+    display: inline-block; 
+    padding-bottom: 10px; 
+    text-shadow: 0 0 8px var(--accent); /* Glow on heading */
+}
+.page-header p { 
+    color: var(--text-light); /* Lighter text */
+    max-width: 800px; 
+    margin: 0 auto; 
+    line-height: 1.6;
+}
 
-        /* Page Header */
-        .page-header { max-width: 1200px; margin: 40px auto; padding: 0 20px; text-align: center; }
-        .page-header h1 { font-size: 2.5rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 10px; }
-        .page-header p { color: #ccc; max-width: 800px; margin: 0 auto; }
+/* Tabs for Categories - Minimalist Cyberpunk */
+.service-tabs { 
+    max-width: 1200px; 
+    margin: 0 auto 30px; 
+    padding: 0 20px; 
+    display: flex; 
+    justify-content: center; 
+    gap: 25px; 
+    flex-wrap: wrap; 
+}
+.tab-btn { 
+    background: var(--panel-dark); /* Dark panel background */
+    border: 1px solid var(--accent-dark); /* Dark cyan border */
+    color: var(--text-light); /* Lighter text */
+    padding: 12px 25px; 
+    border-radius: 4px; 
+    font-size: 1rem; 
+    font-weight: 500; 
+    cursor: pointer; 
+    transition: 0.3s; 
+    box-shadow: 0 0 5px rgba(0, 229, 255, 0.1); /* Subtle glow */
+}
+.tab-btn.active-tab { 
+    background: var(--accent); /* Solid accent background */
+    color: #121212; /* Dark text */
+    border-color: var(--accent); /* Accent border */
+    box-shadow: 0 0 10px var(--accent); /* Stronger glow */
+}
+.tab-btn:hover { 
+    color: var(--accent); /* Accent text on hover */
+    border-color: var(--accent); /* Accent border on hover */
+}
 
-        /* Tabs for Categories */
-        .service-tabs { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
-        .tab-btn { background: #1e1e1e; border: none; color: #ccc; padding: 12px 25px; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active-tab { background: var(--accent); color: #121212; }
-        .tab-btn:hover { color: var(--accent); }
+/* Service Content Sections - Grid Layout */
+.service-content { 
+    max-width: 1200px; 
+    margin: 0 auto 60px; 
+    padding: 0 20px; 
+    display: none; /* Hidden by default */
+}
+.service-content.active-content { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 30px; 
+    align-items: start; 
+}
 
-        /* Service Content Sections */
-        .service-content { max-width: 1200px; margin: 0 auto 60px; padding: 0 20px; display: none; }
-        .service-content.active-content { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+/* Setup & Game Cards - Cyberpunk Style */
+.setup-card { 
+    background: var(--panel-dark); /* Dark panel background */
+    padding: 25px; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); /* Subtle glow */
+    border: 1px solid var(--accent-dark); /* Dark cyan border */
+}
+.setup-card h2 { 
+    color: var(--accent); 
+    margin-bottom: 20px; 
+    font-size: 1.5rem; 
+    text-shadow: 0 0 5px var(--accent); /* Glow on heading */
+}
+.setup-img { 
+    width: 100%; 
+    height: 200px; 
+    background: #2d2d2d; /* Dark placeholder background */
+    border-radius: 4px; 
+    margin-bottom: 20px; 
+    overflow: hidden; 
+    border: 1px solid var(--accent-dark); /* Border */
+    box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.1); /* Inner glow */
+}
+.setup-img img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: block;
+}
+.specs-list { 
+    list-style: none; 
+    margin-bottom: 20px; 
+}
+.specs-list li { 
+    padding: 8px 0; 
+    border-bottom: 1px solid var(--accent-dark); /* Dark cyan separator */
+    color: var(--text-light); /* Lighter text */
+    display: flex; 
+    justify-content: space-between; 
+}
+.specs-list li span { 
+    color: var(--accent); /* Accent color for values */
+    font-weight: 500; 
+    text-shadow: 0 0 3px var(--accent); /* Subtle glow */
+}
 
-        /* Setup & Game Cards */
-        .setup-card { background: #1e1e1e; padding: 25px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,229,255,0.05); }
-        .setup-card h2 { color: var(--accent); margin-bottom: 20px; font-size: 1.5rem; }
-        .setup-img { width: 100%; height: 200px; background: #2d2d2d; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
-        .setup-img img { width: 100%; height: 100%; object-fit: cover; }
-        .specs-list { list-style: none; margin-bottom: 20px; }
-        .specs-list li { padding: 8px 0; border-bottom: 1px solid #2d2d2d; color: #ccc; display: flex; justify-content: space-between; }
-        .specs-list li span { color: var(--accent); font-weight: 500; }
+.games-list { 
+    background: var(--panel-dark); /* Dark panel background */
+    padding: 25px; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); /* Subtle glow */
+    border: 1px solid var(--accent-dark); /* Dark cyan border */
+}
+.games-list h2 { 
+    color: var(--accent); 
+    margin-bottom: 20px; 
+    font-size: 1.5rem; 
+    text-shadow: 0 0 5px var(--accent); /* Glow on heading */
+}
+.game-grid { 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 15px; 
+    margin-bottom: 20px; 
+}
+.game-item { 
+    background: #2d2d2d; /* Darker background for items */
+    padding: 10px; 
+    border-radius: 4px; 
+    text-align: center; 
+    cursor: pointer; 
+    transition: 0.3s; 
+    border: 1px solid var(--accent-dark); /* Subtle border */
+}
+.game-item:hover { 
+    background: var(--accent); /* Accent background on hover */
+    color: #121212; /* Dark text on hover */
+    border-color: var(--accent); /* Accent border */
+    box-shadow: 0 0 10px var(--accent); /* Glow on hover */
+}
+.booking-btn { 
+    background: transparent; /* Transparent background */
+    color: var(--accent); /* Accent text */
+    padding: 12px 20px; 
+    border: 1px solid var(--accent); /* Accent border */
+    border-radius: 4px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: 0.3s; 
+    width: 100%; 
+    display: inline-block;
+    box-shadow: 0 0 5px rgba(0, 229, 255, 0.1);
+}
+.booking-btn:hover { 
+    background: var(--accent); /* Solid accent background on hover */
+    color: #121212; /* Dark text on hover */
+    box-shadow: 0 0 15px var(--accent); /* Stronger glow */
+}
 
-        .games-list { background: #1e1e1e; padding: 25px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,229,255,0.05); }
-        .games-list h2 { color: var(--accent); margin-bottom: 20px; font-size: 1.5rem; }
-        .game-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
-        .game-item { background: #2d2d2d; padding: 10px; border-radius: 4px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .game-item:hover { background: #3d3d3d; border: 1px solid var(--accent); }
-        .booking-btn { background: var(--accent); color: #121212; padding: 12px 20px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%; }
-        .booking-btn:hover { background: #00b8cc; }
+/* In-Page Modals & Sections - Cyberpunk Styling */
+.modal { 
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.8); /* Semi-transparent dark overlay */
+    z-index: 200; 
+    justify-content: center; 
+    align-items: center; 
+}
+.modal-content { 
+    background: var(--panel-dark); /* Dark panel background */
+    padding: 30px; 
+    border-radius: 8px; 
+    width: 100%; 
+    max-width: 450px; 
+    border: 1px solid var(--accent-dark); /* Border */
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); /* Stronger glow */
+}
+.modal-content h3 { 
+    color: var(--accent); 
+    margin-bottom: 20px; 
+    text-align: center; 
+    text-shadow: 0 0 5px var(--accent); /* Glow on heading */
+}
+.close-btn { 
+    background: #2d2d2d; /* Dark background */
+    color: var(--text-light); /* Lighter text */
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 4px; 
+    font-weight: 600; 
+    cursor: pointer; 
+    margin-top: 10px; 
+    transition: 0.3s;
+    border: 1px solid var(--accent-dark);
+}
+.close-btn:hover { 
+    color: var(--accent); /* Accent text on hover */
+    border-color: var(--accent); /* Accent border on hover */
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3); /* Glow on hover */
+}
 
-        /* In-Page Modals & Sections */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 200; justify-content: center; align-items: center; }
-        .modal-content { background: #1e1e1e; padding: 30px; border-radius: 8px; width: 100%; max-width: 450px; }
-        .modal-content h3 { color: var(--accent); margin-bottom: 20px; text-align: center; }
-        .close-btn { background: #2d2d2d; color: #ccc; padding: 10px 20px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; margin-top: 10px; }
-        .close-btn:hover { color: var(--accent); }
+#full-game-library { 
+    max-width: 1200px; 
+    margin: 40px auto 60px; 
+    padding: 25px; 
+    background: var(--panel-dark); /* Dark panel background */
+    border-radius: 8px; 
+    display: none; /* Hidden by default */
+    border: 1px solid var(--accent-dark); /* Border */
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); /* Glow */
+}
+#full-game-library h3 { 
+    color: var(--accent); 
+    margin-bottom: 20px; 
+    text-align: center; 
+    text-shadow: 0 0 5px var(--accent); /* Glow on heading */
+}
+.full-game-grid { 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 15px; 
+}
+/* Specific styling for game items within the full library */
+#full-game-library .game-item {
+    background: #2d2d2d;
+    border: 1px solid var(--accent-dark);
+}
+#full-game-library .game-item:hover {
+    background: var(--accent);
+    color: #121212;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+}
 
-        #full-game-library { max-width: 1200px; margin: 40px auto 60px; padding: 25px; background: #1e1e1e; border-radius: 8px; display: none; }
-        #full-game-library h3 { color: var(--accent); margin-bottom: 20px; text-align: center; }
-        .full-game-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
+/* Styling for form elements within modals */
+.modal-content .form-group { margin-bottom: 15px; }
+.modal-content .form-group label { display: block; color: var(--text-light); margin-bottom: 5px; }
+.modal-content .form-group input, .modal-content .form-group select { 
+    width: 100%; 
+    padding: 10px; 
+    background: #2d2d2d; 
+    border: 1px solid var(--accent-dark); 
+    border-radius: 4px; 
+    color: #fff; 
+    transition: border-color 0.3s;
+}
+.modal-content .form-group input:focus, .modal-content .form-group select:focus { 
+    outline: none; 
+    border-color: var(--accent); 
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3); 
+}
+.modal-content .booking-btn {
+    width: 100%; /* Make booking button full width in modal */
+    margin-top: 15px;
+}
 
-        /* Footer */
-        footer { background: #1e1e1e; padding: 20px; text-align: center; color: #ccc; margin-top: 40px; }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .mobile-menu { display: block; }
-            .service-content.active-content { grid-template-columns: 1fr; }
-            .game-grid, .full-game-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 500px) {
-            .game-grid, .full-game-grid { grid-template-columns: 1fr; }
-            .service-tabs { gap: 15px; }
-            .tab-btn { padding: 10px 15px; font-size: 0.9rem; }
-        }
+/* Footer - Cyberpunk Style */
+footer { 
+    background: var(--panel-dark); /* Dark panel background */
+    padding: 20px; 
+    text-align: center; 
+    color: var(--text-light); /* Lighter text */
+    margin-top: 40px; 
+    border-top: 1px solid var(--accent-dark); /* Subtle border */
+    box-shadow: 0 0 10
     </style>
 </head>
 <body>
@@ -88,19 +380,18 @@
             <div class="logo">RESPAWN <span>GAMING HUB</span></div>
             
             <ul class="nav-links">
-                 <li><a href="respawnhome.html" class="active">Home</a></li>
-                <li><a href="aboutrespawn.html">About</a></li>
-                <li><a href="respawngames.html">Games/Services</a></li>
-                <li><a href="respawnevents.html">Events</a></li>
-                <li><a href="respawnpricing.html">Pricing</a></li>
-                <li><a href="respawnshop.html">Shop</a></li>
-                <li><a href="respawncommunity.html">Community</a></li>
-                <li><a href="respawngallery.html">Gallery</a></li>
-                <li><a href="respawncontact.html">Contact</a></li>
-                <li><a href="respawnfaq.html">FAQ</a></li>
-                <li><a href="respawnleaderboard.html">Leaderboard</a></li>
-                <li><a href="respawnprofile.html">Profile</a></li>
-                <li><a href="respawnadmin.html">Admin</a></li>
+                  <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="games.html"class="active">Games/Services</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="pricing.html">Pricing</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="community.html">Community</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="admin.html">Admin</a></li
             </ul>
             
             <div class="mobile-menu">&#9776;</div>
@@ -126,7 +417,7 @@
         <div class="setup-card">
             <h2>PRO COMPETITIVE RIGS</h2>
             <div class="setup-img">
-                <img src="https://via.placeholder.com/500x200.png?text=PC+GAMING+SETUP" alt="PC Gaming Setup">
+                <img src="images/gpc-setup.jpeg" alt"PC Gaming Setup">
             </div>
             <h3 style="margin-bottom: 10px; color: #fff;">SYSTEM SPECS</h3>
             <ul class="specs-list">
@@ -159,7 +450,7 @@
         <div class="setup-card">
             <h2>CONSOLE STATIONS</h2>
             <div class="setup-img">
-                <img src="https://via.placeholder.com/500x200.png?text=CONSOLE+GAMING+SETUP" alt="Console Gaming Setup">
+                <img src="images/console-setup.jpeg" alt="Console Gaming Setup">
             </div>
             <h3 style="margin-bottom: 10px; color: #fff;">AVAILABLE CONSOLES</h3>
             <ul class="specs-list">
@@ -192,7 +483,7 @@
         <div class="setup-card">
             <h2>IMMERSIVE VR BOOTHS</h2>
             <div class="setup-img">
-                <img src="https://via.placeholder.com/500x200.png?text=VR+GAMING+SETUP" alt="VR Gaming Setup">
+                <img src="images/vr-setup.jpeg" alt="VR Gaming Setup">
             </div>
             <h3 style="margin-bottom: 10px; color: #fff;">VR EQUIPMENT</h3>
             <ul class="specs-list">
@@ -226,7 +517,7 @@
         <div class="setup-card">
             <h2>EXCLUSIVE SERVICES</h2>
             <div class="setup-img">
-                <img src="https://via.placeholder.com/500x200.png?text=TEAM+TRAINING+SPACE" alt="Team Training Setup">
+                <img src="images/team-training.jpeg" alt="Team Training Setup">
             </div>
             <h3 style="margin-top:15px; color:var(--accent);">TEAM TRAINING BOOTHS</h3>
             <ul class="specs-list">
@@ -236,7 +527,7 @@
             </ul>
             <h3 style="margin-top:20px; color:var(--accent);">LIVE STREAMING SETUP</h3>
             <div class="setup-img">
-                <img src="https://via.placeholder.com/500x200.png?text=STREAMING+STATION" alt="Streaming Setup">
+                <img src="images/live-setup.jpeg" alt="Streaming Setup">
             </div>
             <ul class="specs-list">
                 <li>Professional capture cards & audio mixing gear</li>
