@@ -1,62 +1,255 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Respawn Gaming Hub - Admin Panel</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background: #121212; color: #fff; }
-        
-        :root { --accent: #00e5ff; }
+     /* Base Styles - Cyberpunk/Terminal */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Consolas', 'Monaco', 'monospace'; 
+}
 
-        /* Admin Login Section */
-        .login-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .admin-logo { font-size: 2rem; font-weight: 700; margin-bottom: 30px; }
-        .admin-logo span { color: var(--accent); }
-        .admin-login-card { background: #1e1e1e; padding: 40px; border-radius: 8px; box-shadow: 0 0 20px rgba(0,229,255,0.15); width: 100%; max-width: 400px; }
-        .admin-login-card h2 { margin-bottom: 25px; text-align: center; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 5px; color: #ccc; }
-        input { width: 100%; padding: 12px; background: #2d2d2d; border: 1px solid #3d3d3d; border-radius: 4px; color: #fff; font-size: 1rem; }
-        input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 5px rgba(0,229,255,0.5); }
-        .admin-btn { width: 100%; padding: 12px; background: var(--accent); color: #121212; border: none; border-radius: 4px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .admin-btn:hover { background: #00b8cc; }
-        .creds-note { text-align: center; margin-top: 15px; color: #ccc; font-size: 0.9rem; }
-        .creds-note span { color: var(--accent); }
+body { 
+    background: #0a0e17; /* Dark background */
+    color: #00f0ff; /* Cyan glow text color */
+}
 
-        /* Admin Dashboard (Hidden by Default) */
-        .admin-dashboard { display: none; }
+/* Accent Color */
+:root { 
+    --accent: #00f0ff; 
+    --accent-dark: #008899; /* Darker cyan for borders/accents */
+    --bg-dark: #0a0e17;
+    --panel-dark: #101828; /* Dark panel background */
+}
 
-        /* Admin Nav */
-        .admin-top-nav { background: #1e1e1e; padding: 15px 20px; box-shadow: 0 0 15px rgba(0,229,255,0.1); display: flex; justify-content: space-between; align-items: center; }
-        .admin-nav-links { display: flex; gap: 20px; list-style: none; }
-        .admin-nav-links li { cursor: pointer; color: #ccc; font-weight: 500; padding: 5px 0; transition: 0.3s; }
-        .admin-nav-links li:hover, .admin-nav-links li.active-tab { color: var(--accent); border-bottom: 2px solid var(--accent); }
-        .logout-btn { background: #ff4444; color: #fff; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .logout-btn:hover { background: #cc0000; }
+/* Admin Login Section */
+.login-screen { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 100vh; 
+    padding: 20px; 
+}
+.admin-logo { 
+    font-size: 2rem; 
+    font-weight: 700; 
+    margin-bottom: 30px; 
+    color: #fff;
+    text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent); /* Glow */
+}
+.admin-logo span { 
+    color: var(--accent); 
+}
+.admin-login-card { 
+    background: var(--panel-dark); 
+    padding: 40px; 
+    border-radius: 8px; 
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); /* Stronger glow */
+    width: 100%; 
+    max-width: 400px; 
+    border: 1px solid var(--accent-dark); /* Subtle border */
+}
+.admin-login-card h2 { 
+    margin-bottom: 25px; 
+    text-align: center; 
+    border-bottom: 2px solid var(--accent); 
+    padding-bottom: 10px; 
+    text-shadow: 0 0 5px var(--accent); /* Glow */
+}
+.form-group { 
+    margin-bottom: 20px; 
+}
+label { 
+    display: block; 
+    margin-bottom: 5px; 
+    color: #ccc; 
+}
+input { 
+    width: 100%; 
+    padding: 12px; 
+    background: #2d2d2d; /* Dark input background */
+    border: 1px solid var(--accent-dark); /* Border */
+    border-radius: 4px; 
+    color: #fff; 
+    font-size: 1rem; 
+    font-family: inherit; /* Use monospace font */
+}
+input:focus { 
+    outline: none; 
+    border-color: var(--accent); 
+    box-shadow: 0 0 8px var(--accent); /* Glow on focus */
+}
+.admin-btn { 
+    width: 100%; 
+    padding: 12px; 
+    background: transparent; /* Transparent background */
+    color: var(--accent); /* Accent color text */
+    border: 1px solid var(--accent); /* Accent border */
+    border-radius: 4px; 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: 0.3s; 
+}
+.admin-btn:hover { 
+    background: var(--accent); 
+    color: var(--bg-dark); /* Dark text on hover */
+    box-shadow: 0 0 10px var(--accent); /* Glow on hover */
+}
+.creds-note { 
+    text-align: center; 
+    margin-top: 15px; 
+    color: #ccc; 
+    font-size: 0.9rem; 
+}
+.creds-note span { 
+    color: var(--accent); 
+}
 
-        /* Dashboard Content */
-        .admin-content { max-width: 1300px; margin: 30px auto; padding: 0 20px; }
-        .section-content { display: none; background: #1e1e1e; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,229,255,0.05); }
-        .section-content.active-section { display: block; }
+/* Admin Dashboard (Hidden by Default) */
+.admin-dashboard { 
+    display: none; 
+}
 
-        /* Section Styling */
-        .section-header { font-size: 1.5rem; margin-bottom: 25px; color: var(--accent); }
-        .data-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .data-table th, .data-table td { padding: 12px; text-align: left; border-bottom: 1px solid #2d2d2d; }
-        .data-table th { background: #2d2d2d; color: var(--accent); }
-        .action-btn { padding: 5px 10px; border-radius: 4px; color: #fff; cursor: pointer; border: none; }
-        .approve-btn { background: #4CAF50; }
-        .decline-btn { background: #ff4444; }
-        .edit-btn { background: var(--accent); color: #121212; }
+/* Admin Nav */
+.admin-top-nav { 
+    background: var(--panel-dark); 
+    padding: 15px 20px; 
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); /* Softer glow */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    border-bottom: 1px solid var(--accent-dark); /* Subtle border */
+}
+.admin-nav-links { 
+    display: flex; 
+    gap: 20px; 
+    list-style: none; 
+}
+.admin-nav-links li { 
+    cursor: pointer; 
+    color: #ccc; 
+    font-weight: 500; 
+    padding: 5px 0; 
+    transition: 0.3s; 
+    border-bottom: 1px solid transparent; /* Placeholder for hover */
+}
+.admin-nav-links li:hover, .admin-nav-links li.active-tab { 
+    color: var(--accent); 
+    border-bottom: 1px solid var(--accent); /* Subtle underline */
+    text-shadow: 0 0 5px var(--accent); /* Glow */
+}
+.logout-btn { 
+    background: transparent; /* Transparent background */
+    color: #ff4444; /* Red accent */
+    padding: 8px 20px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: 600; 
+    transition: 0.3s; 
+    border: 1px solid #ff4444; /* Red border */
+}
+.logout-btn:hover { 
+    background: #ff4444; 
+    color: #fff; /* White text on hover */
+    box-shadow: 0 0 10px #ff4444; /* Glow */
+}
 
-        /* Mobile Responsiveness */
-        @media (max-width: 900px) {
-            .admin-nav-links { flex-wrap: wrap; gap: 10px; }
-            .data-table { font-size: 0.9rem; }
-            .action-btn { padding: 3px 6px; font-size: 0.8rem; }
-        }
+/* Dashboard Content */
+.admin-content { 
+    max-width: 1300px; 
+    margin: 30px auto; 
+    padding: 0 20px; 
+}
+.section-content { 
+    display: none; 
+    background: var(--panel-dark); 
+    border-radius: 8px; 
+    padding: 30px; 
+    border: 1px solid var(--accent-dark); /* Subtle border */
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.1); /* Subtle glow */
+}
+.section-content.active-section { 
+    display: block; 
+}
+
+/* Section Styling */
+.section-header { 
+    font-size: 1.5rem; 
+    margin-bottom: 25px; 
+    color: var(--accent); 
+    text-shadow: 0 0 5px var(--accent); /* Glow */
+}
+.data-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 15px; 
+}
+.data-table th, .data-table td { 
+    padding: 12px; 
+    text-align: left; 
+    border-bottom: 1px solid var(--accent-dark); /* Subtle border */
+}
+.data-table th { 
+    background: #2d2d2d; /* Darker header background */
+    color: var(--accent); 
+    font-weight: 700; 
+    text-shadow: 0 0 5px var(--accent); /* Glow */
+}
+.data-table tr:hover { 
+    background: #1a202c; /* Slightly darker hover */
+}
+.action-btn { 
+    padding: 5px 10px; 
+    border-radius: 4px; 
+    color: #fff; 
+    cursor: pointer; 
+    border: none; 
+    transition: 0.3s;
+    font-family: inherit; /* Monospace font */
+}
+.approve-btn { background: #4CAF50; }
+.approve-btn:hover { background: #45a049; }
+.decline-btn { background: #ff4444; }
+.decline-btn:hover { background: #cc0000; }
+.edit-btn { 
+    background: transparent; 
+    color: var(--accent); 
+    border: 1px solid var(--accent); 
+}
+.edit-btn:hover { 
+    background: var(--accent); 
+    color: var(--bg-dark); 
+    box-shadow: 0 0 8px var(--accent);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 900px) {
+    .admin-nav-links { 
+        flex-wrap: wrap; 
+        gap: 10px; 
+        justify-content: center; /* Center nav items */
+    }
+    .admin-top-nav {
+        flex-direction: column; /* Stack nav items vertically */
+        align-items: center;
+    }
+    .admin-nav-links li {
+        margin: 5px 0; /* Add margin for stacked items */
+    }
+    .data-table { 
+        font-size: 0.9rem; 
+    }
+    .action-btn { 
+        padding: 3px 6px; 
+        font-size: 0.8rem; 
+    }
+}
     </style>
 </head>
 <body>
